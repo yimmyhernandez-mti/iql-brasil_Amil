@@ -2,176 +2,242 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <title>MTI | Análisis IQL – Grupo Amil</title>
+  <title>MTI | IQL Brasil – Ricardo Burgos (Grupo Amil)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            teal: {
-              900: '#134e4a',
-              800: '#115e59',
-              700: '#0f766e',
-              600: '#0d9488',
-              500: '#14b8a6'
-            }
-          }
-        }
-      }
+
+  <!-- ESTILOS: MISMO DISEÑO QUE EL CASO GPA -->
+  <style>
+    :root{
+      --bg:#f8fafc; --card:#fff; --border:#e2e8f0;
+      --text:#0f172a; --muted:#64748b;
+      --teal:#0f766e; --tealSoft:#f0fdfa;
+      --orange:#f97316; --orangeSoft:#fff7ed;
+      --shadow:0 1px 3px rgba(15,23,42,.08);
+      --radius:16px;
+      --mono:ui-monospace,Menlo,Consolas,monospace;
+      --sans:system-ui,-apple-system,Segoe UI,sans-serif;
     }
-  </script>
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);font-family:var(--sans);color:var(--text)}
+    .wrap{max-width:1120px;margin:auto;padding:18px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius)}
+    .shadow{box-shadow:var(--shadow)}
+
+    /* HEADER */
+    .header{
+      background:linear-gradient(90deg,#064e3b,#0f766e,#0f172a);
+      color:#fff;padding:22px 18px;
+    }
+    .header-inner{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
+    .pill{
+      font-size:11px;font-weight:900;letter-spacing:.14em;
+      padding:6px 10px;border-radius:999px;
+      background:rgba(13,148,136,.2);
+      border:1px solid rgba(45,212,191,.25);
+      color:#ccfbf1;text-transform:uppercase;
+      width:max-content;
+    }
+    .h1{margin:6px 0;font-size:30px;font-weight:900}
+    .sub{color:#ccfbf1;font-size:14px}
+    .right-head{display:flex;align-items:center;gap:14px}
+
+    .logo{height:80px;width:auto}
+
+    .statusbox{text-align:right}
+    .statusbadge{
+      background:#fde68a;color:#92400e;
+      padding:10px 12px;border-radius:12px;
+      font-weight:900;font-size:13px;
+    }
+    .smallmuted{font-size:12px;color:#99f6e4;font-weight:700}
+
+    /* GRID */
+    main{margin-top:-14px}
+    .grid{display:grid;gap:14px}
+    @media(min-width:1024px){.grid{grid-template-columns:360px 1fr}}
+
+    /* LEFT */
+    .section{padding:16px}
+    .sec-title{font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#94a3b8;margin-bottom:12px}
+    .profile{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+    .avatar{
+      width:56px;height:56px;border-radius:999px;
+      background:#f1f5f9;border:2px solid #e2e8f0;
+      display:grid;place-items:center;font-weight:900;color:#cbd5e1
+    }
+    .name{font-size:18px;font-weight:900}
+    .role{font-size:13px;font-weight:900;color:var(--teal)}
+    .kv{font-size:13px;color:#475569;margin:6px 0}
+
+    /* ICP */
+    .icphead{display:flex;justify-content:space-between;font-size:11px;font-weight:900;color:#64748b;margin-bottom:6px}
+    .barbg{height:8px;background:#f1f5f9;border-radius:999px}
+    .barfill{height:100%;border-radius:999px}
+    .note{
+      margin-top:10px;padding:10px;border-radius:12px;
+      background:var(--tealSoft);border:1px solid #ccfbf1;
+      font-size:12px;color:#134e4a;
+    }
+
+    /* TABS */
+    .tabs{display:inline-flex;gap:6px;padding:6px;border-radius:14px;border:1px solid var(--border);background:#fff}
+    .tabbtn{
+      padding:10px 14px;border-radius:12px;
+      font-weight:900;font-size:13px;
+      border:0;cursor:pointer;background:transparent;color:#64748b
+    }
+    .tabbtn.active{background:var(--teal);color:#fff}
+    .tabbtn.orange.active{background:var(--orange)}
+    .panel{display:none}
+    .panel.active{display:block}
+
+    /* CONTENT */
+    .box{padding:16px}
+    .boxtitle{font-size:14px;font-weight:900;margin-bottom:10px}
+    .good{border-top:4px solid #14b8a6}
+    .bad{border-top:4px solid var(--orange)}
+    ul{padding-left:18px;font-size:13px;color:#475569}
+
+    .timeline .titem{margin:12px 0}
+    .tdate{font-family:var(--mono);font-size:12px;color:#94a3b8}
+    .tbox{padding:12px;border:1px solid var(--border);border-radius:14px;background:#fff;font-size:13px}
+
+    .action-top{background:var(--orangeSoft);border:1px solid #fed7aa;border-radius:16px;padding:16px}
+    .msg{border:2px solid var(--border);border-radius:16px;margin-top:14px}
+    .msg.reco{border-color:#14b8a6}
+    .msghead{display:flex;justify-content:space-between;padding:10px 12px;border-bottom:1px solid var(--border)}
+    .tag{background:var(--teal);color:#fff;font-size:10px;font-weight:900;padding:4px 8px;border-radius:999px}
+    .code{font-family:var(--mono);font-size:12.5px;background:#f8fafc;padding:10px;border-radius:12px;white-space:pre-line}
+  </style>
 </head>
 
-<body class="bg-slate-50 text-slate-800 font-sans">
+<body>
 
-<!-- HEADER -->
-<header class="bg-gradient-to-r from-teal-900 via-teal-800 to-slate-900 text-white py-8 px-4 shadow-md">
-  <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-    
-    <!-- TÍTULO -->
+<header class="header shadow">
+  <div class="wrap header-inner">
     <div>
-      <span class="inline-flex items-center bg-teal-700/50 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest border border-teal-500/50">
-        Salud / Healthcare
-      </span>
-      <h1 class="text-3xl md:text-4xl font-black mt-2">
-        Análisis IQL: Grupo Amil
-      </h1>
-      <p class="text-teal-100 mt-1">
-        Caso: Ricardo Burgos | Timing y Priorización
-      </p>
+      <div class="pill">Salud / Healthcare</div>
+      <div class="h1">Análisis IQL: Grupo Amil</div>
+      <div class="sub">Caso: Ricardo Burgos | Timing y Priorización</div>
     </div>
 
-    <!-- LOGO + STATUS -->
-    <div class="flex items-center gap-6">
-      <!-- LOGO MTI -->
-      <img 
-        src="mti-logo.png"
-        alt="MTI Selling"
-        style="height:80px;width:auto"
-        class="drop-shadow-lg"
-      />
-
-      <!-- STATUS -->
-      <div class="bg-amber-100 text-amber-800 px-4 py-2 rounded-lg font-bold flex items-center gap-2 border border-amber-200">
-        📘 IQL INFORMATIVO
+    <div class="right-head">
+      <img src="mti-logo.png" class="logo" alt="MTI Selling">
+      <div class="statusbox">
+        <div class="smallmuted">Estado actual</div>
+        <div class="statusbadge">📘 IQL INFORMATIVO</div>
+        <div class="smallmuted">Ult. interacción: 18 Dic</div>
       </div>
     </div>
   </div>
 </header>
 
-<!-- MAIN -->
-<main class="max-w-6xl mx-auto px-4 -mt-6 relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-6 pb-16">
+<main class="wrap">
+  <div class="grid">
 
-  <!-- LEFT -->
-  <aside class="space-y-6">
-
-    <!-- PERFIL -->
-    <section class="bg-white p-6 rounded-2xl border shadow-sm">
-      <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
-        Perfil del Lead
-      </h3>
-
-      <div class="flex items-center gap-4 mb-6">
-        <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-xl font-black text-slate-300 border-2">
-          RB
+    <!-- LEFT -->
+    <aside>
+      <section class="card section shadow">
+        <div class="sec-title">Perfil del lead</div>
+        <div class="profile">
+          <div class="avatar">RB</div>
+          <div>
+            <div class="name">Ricardo Burgos</div>
+            <div class="role">VP de Personas y Seguridad</div>
+          </div>
         </div>
-        <div>
-          <h2 class="text-xl font-bold">Ricardo Burgos</h2>
-          <div class="text-teal-600 font-bold text-sm">VP de Personas y Seguridad</div>
-          <div class="text-xs text-slate-500">Grupo Amil</div>
+        <div class="kv">🏥 Grupo Amil</div>
+        <div class="kv">📍 Brasil</div>
+        <div class="kv">👔 C-Level (VP)</div>
+      </section>
+
+      <section class="card section shadow">
+        <div class="sec-title">Alineación con ICP</div>
+
+        <div class="icphead"><span>Industria (Salud)</span><span>10/10</span></div>
+        <div class="barbg"><div class="barfill" style="width:100%;background:#14b8a6"></div></div>
+
+        <div class="icphead"><span>Complejidad</span><span>10/10</span></div>
+        <div class="barbg"><div class="barfill" style="width:100%;background:#14b8a6"></div></div>
+
+        <div class="icphead"><span>Interés</span><span>8/10</span></div>
+        <div class="barbg"><div class="barfill" style="width:80%;background:#fb923c"></div></div>
+
+        <div class="note">
+          <strong>Análisis:</strong> Perfil C-Level en evaluación pasiva. Consume material antes de decidir.
+        </div>
+      </section>
+    </aside>
+
+    <!-- RIGHT -->
+    <section>
+      <div class="tabs shadow">
+        <button class="tabbtn active" data-tab="diag">Diagnóstico</button>
+        <button class="tabbtn" data-tab="time">Timeline</button>
+        <button class="tabbtn orange" data-tab="plan">Plan</button>
+      </div>
+
+      <div class="panel active" id="diag">
+        <div class="card shadow box good">
+          <div class="boxtitle">✅ Conclusión del Analista</div>
+          Lead activo, con interés explícito en material.  
+          Estado correcto: <strong>IQL Informativo / Nurturing</strong>.
         </div>
       </div>
 
-      <ul class="text-sm text-slate-600 space-y-2">
-        <li>🏥 Salud / Healthcare Enterprise</li>
-        <li>📍 Brasil</li>
-        <li>💼 C-Level (VP)</li>
-      </ul>
-    </section>
-
-    <!-- ICP -->
-    <section class="bg-white p-6 rounded-2xl border shadow-sm">
-      <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4">
-        Alineación con ICP
-      </h3>
-
-      <p class="text-sm mb-2">Industria (Salud) — 10/10</p>
-      <div class="h-2 bg-slate-100 rounded-full mb-3">
-        <div class="h-full bg-teal-500 rounded-full w-full"></div>
+      <div class="panel" id="time">
+        <div class="card shadow box timeline">
+          <div class="titem">
+            <div class="tdate">05 Dic</div>
+            <div class="tbox">Solicita material</div>
+          </div>
+          <div class="titem">
+            <div class="tdate">10 Dic</div>
+            <div class="tbox">Prefiere LinkedIn (fricción)</div>
+          </div>
+          <div class="titem">
+            <div class="tdate">18 Dic</div>
+            <div class="tbox">Recibe One Pager y agradece</div>
+          </div>
+        </div>
       </div>
 
-      <p class="text-sm mb-2">Complejidad Operativa — 10/10</p>
-      <div class="h-2 bg-slate-100 rounded-full mb-3">
-        <div class="h-full bg-teal-500 rounded-full w-full"></div>
-      </div>
+      <div class="panel" id="plan">
+        <div class="action-top shadow">
+          <strong>Estrategia:</strong> Retomar sin presión y validar utilidad del material.
+        </div>
 
-      <p class="text-sm mb-2">Interés (Revisión) — 8/10</p>
-      <div class="h-2 bg-slate-100 rounded-full">
-        <div class="h-full bg-amber-500 rounded-full w-4/5"></div>
-      </div>
-
-      <div class="mt-4 p-3 bg-teal-50 border border-teal-100 rounded-lg text-xs text-teal-900">
-        <strong>Análisis:</strong> Perfil C-Level con evaluación pasiva. Primero consume material, luego decide.
-      </div>
-    </section>
-  </aside>
-
-  <!-- RIGHT -->
-  <section class="lg:col-span-2 space-y-6">
-
-    <!-- TABS -->
-    <div class="bg-white p-1 rounded-xl border shadow-sm flex">
-      <button onclick="showTab('diag')" class="tab active flex-1 px-6 py-2 font-bold rounded-lg">Diagnóstico</button>
-      <button onclick="showTab('time')" class="tab flex-1 px-6 py-2 font-bold rounded-lg">Timeline</button>
-      <button onclick="showTab('plan')" class="tab flex-1 px-6 py-2 font-bold rounded-lg bg-orange-500 text-white">Plan</button>
-    </div>
-
-    <!-- DIAG -->
-    <div id="diag" class="tab-content bg-white p-6 rounded-2xl border shadow-sm">
-      <h3 class="font-bold text-teal-800 mb-3">Conclusión del Analista</h3>
-      <p class="text-sm text-slate-600">
-        Lead activo, con interés explícito en material. No hay rechazo.  
-        Estado correcto: <strong>IQL Informativo / Nurturing</strong>.
-      </p>
-    </div>
-
-    <!-- TIMELINE -->
-    <div id="time" class="tab-content hidden bg-white p-6 rounded-2xl border shadow-sm">
-      <ul class="text-sm space-y-3">
-        <li>📩 05 Dic — Solicita material</li>
-        <li>⚠️ 10 Dic — Fricción por email</li>
-        <li>📎 18 Dic — Recibe One Pager y agradece</li>
-      </ul>
-    </div>
-
-    <!-- PLAN -->
-    <div id="plan" class="tab-content hidden bg-white p-6 rounded-2xl border shadow-sm">
-      <h3 class="font-bold text-orange-800 mb-2">Estrategia de Nurturing</h3>
-      <p class="text-sm text-slate-600 mb-4">
-        Retomar sin presión y validar si el material fue útil.
-      </p>
-
-      <pre class="bg-slate-50 p-4 rounded-lg text-sm border">
+        <div class="msg reco shadow">
+          <div class="msghead">
+            <div>Opción recomendada</div>
+            <div class="tag">Nurturing</div>
+          </div>
+          <div class="code">
 Oi Ricardo! 😊
 
 Queria só confirmar se você conseguiu dar uma olhada no material que compartilhei.
 Se fizer sentido, podemos trocar impressões em 10 minutos.
 
 Fico à disposição.
-      </pre>
-    </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  </section>
+  </div>
 </main>
 
 <script>
-  function showTab(id){
-    document.querySelectorAll('.tab-content').forEach(t=>t.classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
-  }
+  document.querySelectorAll(".tabbtn").forEach(btn=>{
+    btn.onclick=()=>{
+      document.querySelectorAll(".tabbtn").forEach(b=>b.classList.remove("active"));
+      document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(btn.dataset.tab).classList.add("active");
+    }
+  });
 </script>
 
 </body>
 </html>
+
